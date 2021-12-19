@@ -4,6 +4,7 @@ import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 
 import Banner from '../components/Banner';
+import Navbar from '../components/Navbar';
 
 export default function Home() {
   return (
@@ -12,9 +13,7 @@ export default function Home() {
         <title>Netflix Clone</title>
       </Head>
 
-      <h1>Netflix Clone</h1>
-
-      {/* <Navbar /> */}
+      <Navbar userName="demo@gmail.com" />
 
       <Banner
         title="Spiderman"
