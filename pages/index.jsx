@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css';
 
 import Banner from '../components/Banner';
 import Navbar from '../components/Navbar';
+import Card from '../components/Card';
 
 export default function Home() {
   return (
@@ -12,16 +13,26 @@ export default function Home() {
       <Head>
         <title>Netflix Clone</title>
       </Head>
-
       <Navbar userName="demo@gmail.com" />
-
       <Banner
         title="Spiderman"
         subTitle="Far from home"
         imageUrl="https://github.com/kulkarniankita/discover-videos/blob/main/public/static/clifford.webp?raw=true"
       />
+      <Card
+        imgUrl="https://github.com/kulkarniankita/discover-videos/blob/main/public/static/clifford.webp?raw=true"
+        size="large"
+      />
 
-      {/* <Card /> */}
+      <Card
+        imgUrl="https://github.com/kulkarniankita/discover-videos/blob/main/public/static/clifford.webp?raw=true"
+        size="medium"
+      />
+
+      <Card
+        imgUrl="https://github.com/kulkarniankita/discover-videos/blob/main/public/static/clifford.webp?raw=true"
+        size="small"
+      />
     </div>
   );
 }
