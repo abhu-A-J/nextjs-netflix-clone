@@ -7,24 +7,12 @@ import Banner from '../components/Banner';
 import Navbar from '../components/Navbar';
 import SectionCards from '../components/SectionCards';
 
-const disneyVidoes = [
-  {
-    imgUrl:
-      'https://github.com/kulkarniankita/discover-videos/blob/main/public/static/clifford.webp?raw=true',
-  },
+import { getVidoes } from '../lib/vidoes';
 
-  {
-    imgUrl:
-      'https://github.com/kulkarniankita/discover-videos/blob/main/public/static/clifford.webp?raw=true',
-  },
+export default function Home(props) {
+  // Props
+  const { disneyVidoes } = props;
 
-  {
-    imgUrl:
-      'https://github.com/kulkarniankita/discover-videos/blob/main/public/static/clifford.webp?raw=true',
-  },
-];
-
-export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
@@ -47,12 +35,17 @@ export default function Home() {
           size="medium"
         />
 
-        <SectionCards
-          title="Cartoon"
-          vidoes={disneyVidoes}
-          size="small"
-        />
+        <SectionCards title="Cartoon" vidoes={disneyVidoes} size="small" />
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  const disneyVidoes = getVidoes();
+  return {
+    props: {
+      disneyVidoes,
+    },
+  };
 }
