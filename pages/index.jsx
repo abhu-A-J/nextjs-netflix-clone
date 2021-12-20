@@ -7,11 +7,12 @@ import Banner from '../components/Banner';
 import Navbar from '../components/Navbar';
 import SectionCards from '../components/SectionCards';
 
-import { getVidoes } from '../lib/vidoes';
+import { getPopularVideos, getVidoes } from '../lib/vidoes';
 
 export default function Home(props) {
   // Props
-  const { disneyVidoes, productivityVidoes, travelVidoes } = props;
+  const { disneyVidoes, productivityVidoes, travelVidoes, popularVidoes } =
+    props;
 
   return (
     <div className={styles.container}>
@@ -37,7 +38,7 @@ export default function Home(props) {
           size="medium"
         />
 
-        <SectionCards title="Popular" vidoes={disneyVidoes} size="small" />
+        <SectionCards title="Popular" vidoes={popularVidoes} size="small" />
       </div>
     </div>
   );
@@ -48,11 +49,14 @@ export async function getServerSideProps() {
   const productivityVidoes = await getVidoes('productivity');
   const travelVidoes = await getVidoes('travel');
 
+  const popularVidoes = await getPopularVideos();
+
   return {
     props: {
       disneyVidoes,
       productivityVidoes,
       travelVidoes,
+      popularVidoes,
     },
   };
 }
