@@ -11,7 +11,7 @@ import { getVidoes } from '../lib/vidoes';
 
 export default function Home(props) {
   // Props
-  const { disneyVidoes } = props;
+  const { disneyVidoes, productivityVidoes, travelVidoes } = props;
 
   return (
     <div className={styles.container}>
@@ -29,23 +29,30 @@ export default function Home(props) {
       <div className={styles.sectionWrapper}>
         <SectionCards title="Disney" vidoes={disneyVidoes} size="large" />
 
+        <SectionCards title="Travel" vidoes={travelVidoes} size="small" />
+
         <SectionCards
           title="Productivity"
-          vidoes={disneyVidoes}
+          vidoes={productivityVidoes}
           size="medium"
         />
 
-        <SectionCards title="Cartoon" vidoes={disneyVidoes} size="small" />
+        <SectionCards title="Popular" vidoes={disneyVidoes} size="small" />
       </div>
     </div>
   );
 }
 
 export async function getServerSideProps() {
-  const disneyVidoes = getVidoes();
+  const disneyVidoes = await getVidoes('disney');
+  const productivityVidoes = await getVidoes('productivity');
+  const travelVidoes = await getVidoes('travel');
+
   return {
     props: {
       disneyVidoes,
+      productivityVidoes,
+      travelVidoes,
     },
   };
 }
