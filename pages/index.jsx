@@ -19,27 +19,29 @@ export default function Home(props) {
       <Head>
         <title>Netflix Clone</title>
       </Head>
-      <Navbar userName="demo@gmail.com" />
 
-      <Banner
-        title="Spiderman"
-        subTitle="Far from home"
-        imageUrl="https://github.com/kulkarniankita/discover-videos/blob/main/public/static/clifford.webp?raw=true"
-      />
-
-      <div className={styles.sectionWrapper}>
-        <SectionCards title="Disney" vidoes={disneyVidoes} size="large" />
-
-        <SectionCards title="Travel" vidoes={travelVidoes} size="small" />
-
-        <SectionCards
-          title="Productivity"
-          vidoes={productivityVidoes}
-          size="medium"
+      <main className={styles.main}>
+        <Navbar userName="demo@gmail.com" />
+        <Banner
+          title="Spiderman"
+          subTitle="Far from home"
+          imageUrl="https://github.com/kulkarniankita/discover-videos/blob/main/public/static/clifford.webp?raw=true"
         />
 
-        <SectionCards title="Popular" vidoes={popularVidoes} size="small" />
-      </div>
+        <div className={styles.sectionWrapper}>
+          <SectionCards title="Disney" vidoes={disneyVidoes} size="large" />
+
+          <SectionCards title="Travel" vidoes={travelVidoes} size="small" />
+
+          <SectionCards
+            title="Productivity"
+            vidoes={productivityVidoes}
+            size="medium"
+          />
+
+          <SectionCards title="Popular" vidoes={popularVidoes} size="small" />
+        </div>
+      </main>
     </div>
   );
 }
