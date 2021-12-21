@@ -1,14 +1,35 @@
+import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import styles from '../styles/Login.module.css';
 
 export default function Login() {
+  const [userMsg, setUserMsg] = useState('');
+  const [email, setEmail] = useState('');
+
+  const { push } = useRouter();
+
+  // Email Change Evenet
+  const handleOnChangeEmail = (e) => {
+    setUserMsg('');
+    setEmail(e.target.value);
+  };
+
   // login handler
   const handleLoginWithEmail = (e) => {
     e.preventDefault();
     console.log('Login');
+
+    if (email) {
+      // route to dashboard
+      push('/');
+    } else {
+      // show the user message
+      setUserMsg('Enter your email!');
+    }
   };
 
   return (
@@ -42,9 +63,11 @@ export default function Login() {
             type="text"
             placeholder="Email Address"
             className={styles.emailInput}
+            value={email}
+            onChange={handleOnChangeEmail}
           />
 
-          <p className={styles.userMsg}>Enter a valid email address</p>
+          <p className={styles.userMsg}>{userMsg}</p>
 
           <button onClick={handleLoginWithEmail} className={styles.loginBtn}>
             Sign In
