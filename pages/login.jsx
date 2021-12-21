@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -6,11 +6,14 @@ import { useRouter } from 'next/router';
 
 import styles from '../styles/Login.module.css';
 
+import { magic } from '../lib/magic-client';
+
 export default function Login() {
   const [userMsg, setUserMsg] = useState('');
   const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { push } = useRouter();
+  const router = useRouter();
 
   // Email Change Evenet
   const handleOnChangeEmail = (e) => {
@@ -19,18 +22,40 @@ export default function Login() {
   };
 
   // login handler
-  const handleLoginWithEmail = (e) => {
+  const handleLoginWithEmail = async (e) => {
     e.preventDefault();
-    console.log('Login');
 
     if (email) {
       // route to dashboard
-      push('/');
+      setIsLoading(true);
+      try {
+        const didToken = await magic.auth.loginWithMagicLink({ email });
+        if (didToken) {
+          router.push('/');
+        }
+      } catch (err) {
+        console.error('Error logging in', err);
+        setIsLoading(false);
+      }
     } else {
       // show the user message
       setUserMsg('Enter your email!');
     }
   };
+
+  const handleComplete = () => {
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    router.events.on('routeChangeComplete', handleComplete);
+    router.events.on('routeChangeError', handleComplete);
+
+    return () => {
+      router.events.off('routeChangeComplete', handleComplete);
+      router.events.off('routeChangeError', handleComplete);
+    };
+  }, [router]);
 
   return (
     <div className={styles.container}>
@@ -69,8 +94,12 @@ export default function Login() {
 
           <p className={styles.userMsg}>{userMsg}</p>
 
-          <button onClick={handleLoginWithEmail} className={styles.loginBtn}>
-            Sign In
+          <button
+            onClick={handleLoginWithEmail}
+            className={styles.loginBtn}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Loading...' : 'Sign In'}
           </button>
         </div>
       </main>
