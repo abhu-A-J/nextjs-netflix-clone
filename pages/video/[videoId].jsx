@@ -11,6 +11,16 @@ Modal.setAppElement('#__next');
 export default function Video() {
   const router = useRouter();
 
+  // Toggle like function
+  const handleToggleLike = () => {
+    console.log('Liked');
+  };
+
+  // Toggle dislike
+  const handleToggleDislike = () => {
+    console.log('Dislike');
+  };
+
   return (
     <div className={styles.container}>
       <Navbar />
@@ -33,6 +43,22 @@ export default function Video() {
           src={`https://www.youtube.com/embed/${router.query.videoId}?autoplay=0&controls=0&rel=0&origin=http://example.com`}
           frameborder="0"
         />
+
+        {/* Like and dislike buttons */}
+        <div className={styles.likeDislikeBtnWrapper}>
+          <div className={styles.likeBtnWrapper}>
+            <button onClick={handleToggleLike}>
+              <div className={styles.btnWrapper}>
+                {/* <Like selected={toggleLike} /> */}
+              </div>
+            </button>
+          </div>
+          <button onClick={handleToggleDislike}>
+            <div className={styles.btnWrapper}>
+              {/* <DisLike selected={toggleDisLike} /> */}
+            </div>
+          </button>
+        </div>
 
         {/* Modal Body */}
         <div className={styles.modalBody}>
