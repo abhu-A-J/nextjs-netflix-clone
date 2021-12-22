@@ -21,7 +21,7 @@ export default function Home(props) {
       </Head>
 
       <main className={styles.main}>
-        <Navbar userName="demo@gmail.com" />
+        <Navbar />
         <Banner
           title="Spiderman"
           subTitle="Far from home"

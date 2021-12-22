@@ -1,19 +1,45 @@
 import Image from 'next/image';
 import Link from 'next/Link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Router, { useRouter } from 'next/router';
 
 import styles from './index.module.css';
 
-export default function Navbar(props) {
-  // Props
-  const { userName } = props;
+import { magic } from '../../lib/magic-client';
 
+export default function Navbar() {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [email, setEmail] = useState('');
+
+  const router = useRouter();
 
   const toggleDropdown = (e) => {
     e.preventDefault();
     setShowDropdown((prevState) => !prevState);
   };
+
+  const handleSignout = async (e) => {
+    e.preventDefault();
+    try {
+      await magic.user.logout();
+      router.push('/login');
+    } catch (err) {
+      console.error('Error logging out user', err);
+    }
+  };
+
+  useEffect(async () => {
+    console.log('Running effect');
+    try {
+      const { email, publicAddress } = await magic.user.getMetadata();
+      console.log(email);
+      if (email) {
+        setEmail(email);
+      }
+    } catch (err) {
+      console.error('Error getting user metadata', err);
+    }
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -48,7 +74,7 @@ export default function Navbar(props) {
         <nav className={styles.navContainer}>
           <div>
             <button className={styles.usernameBtn} onClick={toggleDropdown}>
-              <p className={styles.username}>{userName}</p>
+              <p className={styles.username}>{email}</p>
               <Image
                 src="/expandeMore.svg"
                 alt="Expande the dropdown to see the options"
@@ -60,9 +86,9 @@ export default function Navbar(props) {
             {showDropdown && (
               <div className={styles.navDropdown}>
                 <div>
-                  <Link href="/login" passHref>
-                    <a className={styles.linkName}>Sign Out of Netflix</a>
-                  </Link>
+                  <a className={styles.linkName} onClick={handleSignout}>
+                    Sign Out
+                  </a>
                   <div className={styles.lineWrapper} />
                 </div>
               </div>
