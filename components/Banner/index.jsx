@@ -1,12 +1,15 @@
 import Image from 'next/image';
 import styles from './index.module.css';
+import { useRouter } from 'next/router';
 
 export default function Banner(props) {
   // Props
-  const { title, subTitle, imageUrl } = props;
+  const { title, subTitle, imageUrl, videoId } = props;
+
+  const router = useRouter();
 
   const handleOnPlay = () => {
-    console.log('Play');
+    router.push(`/video/${videoId}`);
   };
 
   return (
@@ -23,10 +26,13 @@ export default function Banner(props) {
 
           <div className={styles.playBtnWrapper}>
             <button className={styles.btnWithIcon} onClick={handleOnPlay}>
-						<Image src="/playArrow.svg" alt="Play the item" width={32} height={32}/>
-              <span className={styles.playText}>
-							Play
-							</span>
+              <Image
+                src="/playArrow.svg"
+                alt="Play the item"
+                width={32}
+                height={32}
+              />
+              <span className={styles.playText}>Play</span>
             </button>
           </div>
         </div>

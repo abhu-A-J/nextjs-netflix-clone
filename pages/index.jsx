@@ -23,6 +23,7 @@ export default function Home(props) {
       <main className={styles.main}>
         <Navbar />
         <Banner
+          videoId="JbE8XJyNnZk"
           title="Spiderman"
           subTitle="Far from home"
           imageUrl="https://github.com/kulkarniankita/discover-videos/blob/main/public/static/clifford.webp?raw=true"
