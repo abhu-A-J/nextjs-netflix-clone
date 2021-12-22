@@ -1,4 +1,6 @@
+import Link from 'next/link';
 import Card from '../Card';
+
 import styles from './index.module.css';
 
 export default function SectionCards(props) {
@@ -11,7 +13,13 @@ export default function SectionCards(props) {
 
       <div className={styles.cardWrapper}>
         {vidoes.map((video, index) => {
-          return <Card key={index} imgUrl={video.imgUrl} size={size} />;
+          return (
+            <Link href={`/video/${video.id}`} key={index + video.imgUrl}>
+              <a>
+                <Card imgUrl={video.imgUrl} size={size} id={index} />
+              </a>
+            </Link>
+          );
         })}
       </div>
     </section>

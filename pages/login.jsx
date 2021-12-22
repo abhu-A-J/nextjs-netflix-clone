@@ -35,7 +35,6 @@ export default function Login() {
         }
       } catch (err) {
         console.error('Error logging in', err);
-        setIsLoading(false);
       }
     } else {
       // show the user message

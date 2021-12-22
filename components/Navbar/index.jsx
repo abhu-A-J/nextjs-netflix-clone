@@ -29,14 +29,13 @@ export default function Navbar() {
   };
 
   useEffect(async () => {
-    console.log('Running effect');
     try {
       const { email, publicAddress } = await magic.user.getMetadata();
-      console.log(email);
       if (email) {
         setEmail(email);
       }
     } catch (err) {
+      setEmail('');
       console.error('Error getting user metadata', err);
     }
   }, []);

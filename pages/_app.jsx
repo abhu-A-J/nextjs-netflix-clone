@@ -10,7 +10,7 @@ import Loader from '../components/Loader';
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   // remove loader once routing is successful
   const handleComplete = () => {
@@ -19,13 +19,10 @@ function MyApp({ Component, pageProps }) {
 
   // effect to check and redirect based on user login status
   useEffect(async () => {
-    const isLoggedIn = await magic.user.isLoggedIn();
-
-    if (isLoggedIn) {
-      router.push('/');
-    } else {
-      router.push('/login');
-    }
+    // const isLoggedIn = await magic.user.isLoggedIn();
+    // if (!isLoggedIn) {
+    //   router.push('/login');
+    // }
   }, []);
 
   // listen to events change to stop flicker event
