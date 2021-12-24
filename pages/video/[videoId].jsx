@@ -1,9 +1,12 @@
 import Modal from 'react-modal';
-import { useEffect } from 'react';
-import { Router, useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import cls from 'classnames';
 
 import Navbar from '../../components/Navbar';
+import Like from '../../components//icons/like-icon';
+import Dislike from '../../components/icons/dislike-icon';
+
 import styles from '../../styles/Video.module.css';
 
 import { getYoutubeVideoById } from '../../lib/vidoes';
@@ -13,6 +16,10 @@ Modal.setAppElement('#__next');
 export default function Video(props) {
   // Props
   const { video } = props;
+
+  const [toggleLike, setToggleLike] = useState(false);
+  const [toggleDislike, setToggleDislike] = useState(false);
+
   const router = useRouter();
 
   // destructure the video prop
@@ -20,12 +27,16 @@ export default function Video(props) {
 
   // Toggle like function
   const handleToggleLike = () => {
-    console.log('Liked');
+    const val = !toggleLike;
+    setToggleLike(val);
+    setToggleDislike(toggleLike);
   };
 
   // Toggle dislike
   const handleToggleDislike = () => {
-    console.log('Dislike');
+    const val = !toggleDislike;
+    setToggleDislike(val);
+    setToggleLike(toggleDislike);
   };
 
   return (
@@ -56,13 +67,13 @@ export default function Video(props) {
           <div className={styles.likeBtnWrapper}>
             <button onClick={handleToggleLike}>
               <div className={styles.btnWrapper}>
-                {/* <Like selected={toggleLike} /> */}
+                <Like selected={toggleLike} />
               </div>
             </button>
           </div>
           <button onClick={handleToggleDislike}>
             <div className={styles.btnWrapper}>
-              {/* <DisLike selected={toggleDisLike} /> */}
+              <Dislike selected={toggleDislike} />
             </div>
           </button>
         </div>
