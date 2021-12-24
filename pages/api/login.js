@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { isNewUser } from '../../lib/db/hasura';
+import { isNewUser, createNewUser } from '../../lib/db/hasura';
 import { magicAdmin } from '../../lib/magic-admin';
 
 export default async function handler(req, res) {
@@ -35,7 +35,19 @@ export default async function handler(req, res) {
         // check if user exists
         const isNewUserQueryResult = await isNewUser(issuer, jwtToken);
 
-        res.status(200).json({ done: true, isNewUserQueryResult });
+        // if a new user add them to hasura
+        if (isNewUserQueryResult) {
+          const userCreated = await createNewUser(
+            { email, issuer, publicAddress },
+            jwtToken
+          );
+          res.status(200).json({
+            done: true,
+            msg: 'New user has been created in DB',
+          });
+        } else {
+          res.status(200).json({ done: true, msg: 'User already exist on DB' });
+        }
       }
     } catch (err) {
       console.error('Something went wrong', err);
