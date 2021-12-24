@@ -19,10 +19,18 @@ function MyApp({ Component, pageProps }) {
 
   // effect to check and redirect based on user login status
   useEffect(async () => {
-    // const isLoggedIn = await magic.user.isLoggedIn();
-    // if (!isLoggedIn) {
-    //   router.push('/login');
-    // }
+    // check user login status
+    const isLoggedIn = await magic.user.isLoggedIn();
+
+    // if not loggedn in, redirect to login page
+    if (!isLoggedIn) {
+      router.push('/login');
+    } else {
+      // if loggedIn and trying to access login page, redirect to home
+      if (isLoggedIn && router.pathname === '/login') {
+        router.push('/');
+      }
+    }
   }, []);
 
   // listen to events change to stop flicker event

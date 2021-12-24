@@ -49,6 +49,6 @@ export default async function handler(req, res) {
       res.status(500).json({ done: false });
     }
   } else {
-    res.status(405).json({ message: 'Get request not supported' });
+    res.status(405).json({ done: false, message: 'Get request not supported' });
   }
 }

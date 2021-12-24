@@ -27,11 +27,30 @@ export default function Login() {
 
     if (email) {
       // route to dashboard
-      setIsLoading(true);
       try {
+        // set loading to true
+        setIsLoading(true);
+
         const didToken = await magic.auth.loginWithMagicLink({ email });
         if (didToken) {
-          router.push('/');
+          // call the login API
+          const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+              'COntent-Type': 'application/json',
+              Accept: 'application/json',
+              Authorization: `Bearer ${didToken}`,
+            },
+          });
+
+          const loggedInData = await response.json();
+
+          if (loggedInData.done) {
+            router.push('/');
+          } else {
+            setIsLoading(false);
+            console.error('Something went wrong');
+          }
         }
       } catch (err) {
         console.error('Error logging in', err);
