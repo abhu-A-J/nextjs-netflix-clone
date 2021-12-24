@@ -48,7 +48,7 @@ export default function Video(props) {
           width="100%"
           height="360"
           src={`https://www.youtube.com/embed/${router.query.videoId}?autoplay=0&controls=0&rel=0&origin=http://example.com`}
-          frameborder="0"
+          frameBorder="0"
         />
 
         {/* Like and dislike buttons */}
